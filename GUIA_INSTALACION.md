@@ -169,3 +169,4 @@ npm test
   Verifica que `FRONTEND_URL="http://localhost:5173"` en `backend/.env` coincida exactamente con la URL donde Vite levantó el frontend.
 - **La sesión no persiste al recargar:**  
   Asegúrate de no bloquear cookies de terceros en el navegador para `localhost`, ya que el JWT se almacena de forma segura en cookies `httpOnly`.
+
