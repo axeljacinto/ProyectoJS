@@ -1,0 +1,35 @@
+# Logs y dependencias
+node_modules/
+.npm/
+dist/
+build/
+*.log
+
+# Entorno y credenciales
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs y SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Cobertura y reportes de tests
+coverage/
+.nyc_output/
+
+# Prisma
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# Temporales
+tmp/
+temp/
+
+# Tareas y convenciones internas de equipo en docs
+docs/TAREAS_*.md
+docs/CONVENCIONES_*.md

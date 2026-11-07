@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  CLIENTE
+  VENDEDOR
+  ADMIN
+}
+
+model Usuario {
+  id               Int          @id @default(autoincrement())
+  nombre           String
+  apellido         String
+  email            String       @unique
+  passwordHash     String
+  rol              Rol          @default(CLIENTE)
+  activo           Boolean      @default(true)
+  intentosFallidos Int          @default(0)
+  bloqueadoHasta   DateTime?
+  ultimoAcceso     DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  componentesCreados Componente[]
+
+  @@map("usuarios")
+}
+
+model Categoria {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  slug        String       @unique
+  descripcion String?
+  orden       Int          @default(0)
+  activa      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  componentes Componente[]
+
+  @@index([slug])
+  @@index([activa])
+  @@map("categorias")
+}
+
+model Marca {
+  id         Int          @id @default(autoincrement())
+  nombre     String       @unique
+  paisOrigen String?
+  sitioWeb   String?
+  logoUrl    String?
+  activa     Boolean      @default(true)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  componentes Componente[]
+
+  @@index([nombre])
+  @@index([activa])
+  @@map("marcas")
+}
+
+model Componente {
+  id               Int        @id @default(autoincrement())
+  sku              String     @unique
+  nombre           String
+  descripcion      String?
+  tipo             String     // Procesador, PlacaMadre, MemoriaRam, TarjetaGrafica, etc.
+  marcaId          Int
+  categoriaId      Int
+  precio           Decimal    @db.Decimal(10, 2)
+  moneda           String     @default("USD")
+  stock            Int        @default(0)
+  stockMinimo      Int        @default(5)
+  garantiaMeses    Int        @default(12)
+  imagenUrl        String?
+  especificaciones Json       @default("{}")
+  activo           Boolean    @default(true)
+  creadoPorId      Int?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  marca            Marca      @relation(fields: [marcaId], references: [id])
+  categoria        Categoria  @relation(fields: [categoriaId], references: [id])
+  creadoPor        Usuario?   @relation(fields: [creadoPorId], references: [id])
+
+  @@index([sku])
+  @@index([nombre])
+  @@index([categoriaId])
+  @@index([marcaId])
+  @@index([activo])
+  @@map("componentes")
+}
+
