@@ -35,14 +35,18 @@ export function TarjetaComponente({ componente }) {
   };
 
   return (
-    <div className="group rounded-2xl glass-panel glass-panel-hover overflow-hidden flex flex-col justify-between">
+    <Link
+      to={`/componentes/${componente.id}`}
+      aria-label={`Ver detalles de ${componente.nombre}`}
+      className="group rounded-2xl glass-panel glass-panel-hover overflow-hidden flex flex-col justify-between"
+    >
       {/* Contenedor de Imagen con Overlay y Badges */}
-      <div className="relative h-52 w-full bg-gradient-to-b from-slate-900/90 to-dark-950 overflow-hidden flex items-center justify-center p-5 border-b border-slate-800/70">
+      <div className="relative h-52 w-full bg-slate-900 overflow-hidden flex items-center justify-center p-5 border-b border-slate-800/70">
         {componente.imagenUrl ? (
           <img
             src={componente.imagenUrl}
             alt={componente.nombre}
-            className="w-full h-full object-cover rounded-xl group-hover:scale-108 transition-transform duration-500"
+            className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="w-20 h-20 rounded-2xl bg-slate-800/80 flex items-center justify-center text-slate-500">
@@ -52,13 +56,13 @@ export function TarjetaComponente({ componente }) {
 
         {/* Badge de Marca Flotante */}
         {componente.marca && (
-          <span className="absolute top-3 left-3 bg-[#070a12]/85 backdrop-blur-md text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-lg text-cyan-300 border border-slate-700/80 shadow-md">
+          <span className="absolute top-3 left-3 bg-[#070a12]/85 text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-lg text-cyan-300 border border-slate-700/80">
             {componente.marca.nombre}
           </span>
         )}
 
         {/* Tipo de Hardware */}
-        <span className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-[10px] font-bold text-slate-300 px-2 py-0.5 rounded-md border border-slate-700/60">
+        <span className="absolute top-3 right-3 bg-slate-900/80 text-[10px] font-bold text-slate-300 px-2 py-0.5 rounded-md border border-slate-700/60">
           {componente.tipo}
         </span>
       </div>
@@ -88,20 +92,16 @@ export function TarjetaComponente({ componente }) {
             <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">
               Precio Oficial
             </span>
-            <span className="text-xl font-black bg-gradient-to-r from-cyan-400 to-sky-300 bg-clip-text text-transparent">
+            <span className="text-xl font-black text-cyan-400">
               {formatearPrecio(componente.precio, componente.moneda)}
             </span>
           </div>
 
-          <Link
-            to={`/componentes/${componente.id}`}
-            className="p-2.5 rounded-xl bg-slate-800/80 hover:bg-cyan-500 hover:text-black text-cyan-400 border border-slate-700/60 hover:border-cyan-400 transition-all shadow-md active:scale-95 flex items-center justify-center group/btn"
-            title="Ver especificaciones técnicas completas"
-          >
-            <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-          </Link>
+          <span className="p-2.5 rounded-xl bg-slate-800/80 text-cyan-400 border border-slate-700/60 group-hover:bg-cyan-500 group-hover:text-black transition-colors flex items-center justify-center">
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

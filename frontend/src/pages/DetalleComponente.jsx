@@ -54,7 +54,7 @@ export function DetalleComponente() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Foto / Visualización del Producto */}
-        <div className="glass-panel rounded-3xl border border-slate-800/80 p-8 flex items-center justify-center bg-gradient-to-b from-slate-900/60 to-dark-950 overflow-hidden relative shadow-2xl">
+        <div className="glass-panel rounded-3xl border border-slate-800/80 p-8 flex items-center justify-center bg-slate-900 overflow-hidden relative">
           {comp.imagenUrl ? (
             <img
               src={comp.imagenUrl}
@@ -66,7 +66,7 @@ export function DetalleComponente() {
           )}
 
           {comp.marca && (
-            <span className="absolute top-5 left-5 bg-[#070a12]/90 backdrop-blur-md text-xs uppercase font-extrabold tracking-wider px-3.5 py-1.5 rounded-xl text-cyan-300 border border-slate-700/80 shadow-lg">
+            <span className="absolute top-5 left-5 bg-[#070a12]/90 text-xs uppercase font-extrabold tracking-wider px-3.5 py-1.5 rounded-lg text-cyan-300 border border-slate-700/80">
               {comp.marca.nombre}
             </span>
           )}
@@ -99,7 +99,7 @@ export function DetalleComponente() {
               <span className="text-[11px] text-slate-400 uppercase font-extrabold tracking-wider block">
                 Precio de Venta
               </span>
-              <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-cyan-400 to-sky-300 bg-clip-text text-transparent">
+              <span className="text-3xl sm:text-4xl font-black text-cyan-400">
                 {formatearPrecio(comp.precio, comp.moneda)}
               </span>
             </div>

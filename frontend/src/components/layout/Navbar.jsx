@@ -1,8 +1,8 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Cpu, ShoppingBag, Shield, LogOut, User, Sparkles } from 'lucide-react';
+import { Cpu, ShoppingBag, Shield, LogOut, User, Sparkles, Sun, Moon } from 'lucide-react';
 
-export function Navbar() {
+export function Navbar({ theme, onToggleTheme }) {
   const { usuario, logout, esRol } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,18 +15,18 @@ export function Navbar() {
   const esRutaActiva = (ruta) => location.pathname === ruta;
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#070a12]/80 backdrop-blur-xl border-b border-slate-800/60 px-6 py-3.5 transition-all">
+    <nav className="site-nav sticky top-0 z-50 border-b px-6 py-3.5 transition-colors">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo de Marca */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-all duration-300">
+          <div className="relative w-10 h-10 rounded-xl bg-cyan-600 flex items-center justify-center group-hover:scale-105 transition-all duration-300">
             <Cpu className="w-5 h-5 text-black" />
             <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
           <div>
             <div className="font-extrabold text-lg tracking-tight flex items-center gap-1">
               <span className="text-white font-black">PC</span>
-              <span className="bg-gradient-to-r from-cyan-400 to-sky-300 bg-clip-text text-transparent font-black">
+              <span className="text-cyan-400 font-black">
                 Builder
               </span>
               <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/80 font-bold ml-1">
@@ -96,10 +96,21 @@ export function Navbar() {
 
         {/* Sección de Autenticación */}
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 transition-colors hover:bg-slate-800"
+            title={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
+            aria-label={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
+          >
+            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            <span className="hidden xl:inline">{theme === 'light' ? 'Modo claro' : 'Modo oscuro'}</span>
+          </button>
+
           {usuario ? (
             <div className="flex items-center gap-2.5">
               <div className="flex items-center gap-2.5 pl-3 pr-2 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm">
-                <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-500 flex items-center justify-center text-black font-extrabold text-[11px]">
+                <div className="w-6 h-6 rounded-lg bg-cyan-500 flex items-center justify-center text-black font-extrabold text-[11px]">
                   {usuario.nombre.charAt(0)}
                 </div>
                 <div className="text-left">
@@ -130,7 +141,7 @@ export function Navbar() {
               </Link>
               <Link
                 to="/registro"
-                className="text-xs font-bold bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-black px-4 py-2 rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all hover:scale-105 active:scale-95"
+                className="text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-black px-4 py-2 rounded-lg transition-colors"
               >
                 Registrarse
               </Link>

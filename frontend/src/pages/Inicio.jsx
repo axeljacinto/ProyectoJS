@@ -7,7 +7,7 @@ export function Inicio() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-20">
       {/* Hero Section Modernizado */}
-      <div className="relative text-center space-y-6 max-w-3xl mx-auto pt-6">
+      <div className="relative text-left space-y-6 max-w-3xl mr-auto pt-6">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/40 text-cyan-400 text-xs font-bold shadow-lg shadow-cyan-500/10 animate-float">
           <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
           <span>Experiencia 3D Interactiva • Modelo Real Despiezado</span>
@@ -15,17 +15,17 @@ export function Inicio() {
 
         <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
           Ensambla, Explora y Gestiona tu{' '}
-          <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+          <span className="text-cyan-400">
             PC de Alto Rendimiento
           </span>
         </h1>
 
-        <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+        <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
           Catálogo integral de componentes con simulación 3D en tiempo real. Examina el hardware ensamblado, desarma cada pieza en una vista ordenada y accede directamente a sus especificaciones técnicas.
         </p>
 
         {/* Live Stats Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div className="flex flex-wrap items-center justify-start gap-3 pt-2">
           <div className="flex items-center gap-2 px-3 py-1 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300">
             <Layers className="w-3.5 h-3.5 text-cyan-400" />
             <span><strong className="text-white">8</strong> Categorías Sincronizadas</span>
@@ -113,7 +113,7 @@ export function Inicio() {
 
       {/* Características del Sistema (Seguridad, POO, 3D) */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-slate-900">
-        <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 hover:border-cyan-500/40 transition-colors">
+        <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
           <div className="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-800/60 flex items-center justify-center text-cyan-400 mb-4 shadow-lg shadow-cyan-500/10">
             <ShieldCheck className="w-6 h-6" />
           </div>
@@ -123,7 +123,7 @@ export function Inicio() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 hover:border-sky-500/40 transition-colors">
+        <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
           <div className="w-12 h-12 rounded-xl bg-sky-950/80 border border-sky-800/60 flex items-center justify-center text-sky-400 mb-4 shadow-lg shadow-sky-500/10">
             <Cpu className="w-6 h-6" />
           </div>
@@ -133,7 +133,7 @@ export function Inicio() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 hover:border-purple-500/40 transition-colors">
+        <div className="p-6 rounded-2xl glass-panel glass-panel-hover">
           <div className="w-12 h-12 rounded-xl bg-purple-950/80 border border-purple-800/60 flex items-center justify-center text-purple-400 mb-4 shadow-lg shadow-purple-500/10">
             <Zap className="w-6 h-6" />
           </div>

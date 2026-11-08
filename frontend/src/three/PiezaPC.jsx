@@ -92,7 +92,7 @@ export function PiezaPC({ pieza, explosionada, onSeleccionar, onToggleDesarmar }
           center
           style={{ pointerEvents: 'none' }}
         >
-          <div className="bg-dark-900/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-cyan-400/80 shadow-2xl shadow-cyan-500/30 text-xs min-w-[210px] animate-float">
+          <div className="bg-dark-900/95 px-4 py-2.5 rounded-xl border border-cyan-400/80 text-xs min-w-[210px]">
             <div className="flex items-center justify-between gap-2 mb-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400">
                 {pieza.badge}

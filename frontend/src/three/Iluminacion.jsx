@@ -1,36 +1,31 @@
 export function Iluminacion() {
   return (
     <>
-      {/* Luz ambiente fría de relleno */}
-      <ambientLight intensity={0.55} color="#cbd5e1" />
+      <hemisphereLight skyColor="#f8fafc" groundColor="#64748b" intensity={1.15} />
+      <ambientLight intensity={0.8} color="#e2e8f0" />
 
-      {/* Luz Principal de Estudio (Key Light blanca fría) */}
+      {/* Luz principal amplia para revelar forma y materiales del gabinete. */}
       <directionalLight
-        position={[8, 12, 8]}
-        intensity={1.6}
+        position={[7, 9, 8]}
+        intensity={2.2}
         castShadow
         shadow-mapSize={[1024, 1024]}
       />
 
-      {/* Luz Secundaria de Relleno (Fill Light azulada) */}
       <directionalLight
-        position={[-8, 8, -6]}
-        intensity={0.8}
-        color="#38bdf8"
+        position={[-7, 5, 4]}
+        intensity={1.25}
+        color="#dbeafe"
       />
 
-      {/* Luz de Borde / Silueta (Rim Light violeta) */}
       <directionalLight
-        position={[0, -5, -8]}
-        intensity={0.6}
-        color="#a855f7"
+        position={[0, 5, -7]}
+        intensity={1.1}
+        color="#bae6fd"
       />
 
-      {/* Punto de Luz Neón Superior (simula iluminación RGB de torre gamer) */}
-      <pointLight position={[0, 2.5, 0.5]} intensity={1.2} color="#00f2fe" distance={7} />
-
-      {/* Punto de Luz Neón Inferior */}
-      <pointLight position={[0, -1.8, 1.0]} intensity={0.8} color="#8b5cf6" distance={6} />
+      <pointLight position={[0, 1.8, 2.8]} intensity={1.5} color="#67e8f9" distance={9} />
+      <pointLight position={[-2.2, -0.8, 1.8]} intensity={0.75} color="#bfdbfe" distance={7} />
     </>
   );
 }

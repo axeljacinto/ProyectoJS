@@ -26,16 +26,6 @@ export default {
           rose: '#f43f5e',
         },
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'cyber-gradient': 'linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #8b5cf6 100%)',
-        'card-gradient': 'linear-gradient(180deg, rgba(20, 27, 42, 0.7) 0%, rgba(10, 13, 20, 0.85) 100%)',
-      },
-      boxShadow: {
-        'glow-cyan': '0 0 25px -3px rgba(0, 242, 254, 0.35)',
-        'glow-violet': '0 0 25px -3px rgba(139, 92, 246, 0.35)',
-        'glow-card': '0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 15px -3px rgba(0, 242, 254, 0.1)',
-      },
       animation: {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float': 'float 3s ease-in-out infinite',

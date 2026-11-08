@@ -43,7 +43,11 @@ export function Catalogo() {
   // Query principal de componentes con caché y recarga automática
   const { data: resComponentes, isLoading, isError, error } = useQuery({
     queryKey: ['componentes', filtros],
-    queryFn: () => componentesApi.listar(filtros),
+    queryFn: () => componentesApi.listar(
+      Object.fromEntries(
+        Object.entries(filtros).filter(([, valor]) => valor !== '' && valor !== null && valor !== undefined)
+      )
+    ),
     keepPreviousData: true,
   });
 

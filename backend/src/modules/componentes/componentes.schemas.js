@@ -27,13 +27,18 @@ export const crearComponenteSchema = z.object({
 
 export const editarComponenteSchema = crearComponenteSchema.partial();
 
+const precioOpcional = z.preprocess(
+  (valor) => (valor === '' || valor === null ? undefined : valor),
+  z.coerce.number().min(0).optional()
+);
+
 export const listarComponentesQuerySchema = z.object({
   pagina: z.coerce.number().int().positive().default(1),
   limite: z.coerce.number().int().positive().max(100).default(20),
   categoria: z.string().optional(),
   marca: z.string().optional(),
-  precioMin: z.coerce.number().positive().optional(),
-  precioMax: z.coerce.number().positive().optional(),
+  precioMin: precioOpcional,
+  precioMax: precioOpcional,
   q: z.string().optional(),
   orden: z.enum(['id_desc', 'precio_asc', 'precio_desc', 'nombre_asc']).default('id_desc'),
 });
