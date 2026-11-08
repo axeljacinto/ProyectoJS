@@ -4,6 +4,7 @@ import { OrbitControls, Center } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import { PIEZAS_PC } from './piezas.config.js';
 import { PiezaPC } from './PiezaPC.jsx';
+import { CablesPC } from './CablesPC.jsx';
 import { Iluminacion } from './Iluminacion.jsx';
 import { Maximize2, Minimize2, Sparkles, Compass, Eye } from 'lucide-react';
 
@@ -28,6 +29,7 @@ function GrupoPC({ explosionada, onSeleccionar, onToggleDesarmar }) {
           onToggleDesarmar={onToggleDesarmar}
         />
       ))}
+      {!explosionada && <CablesPC />}
     </group>
   );
 }

@@ -1,78 +1,87 @@
-import * as THREE from 'three';
+import { RoundedBox } from '@react-three/drei';
+import { ModeloVentilador } from './ModeloVentilador';
+
+const FINES = Array.from({ length: 22 }, (_, index) => index);
+const TORNILLOS = [
+  [-1.5, -0.48], [-1.5, 0.48], [-0.5, -0.48], [-0.5, 0.48],
+  [0.5, -0.48], [0.5, 0.48], [1.5, -0.48], [1.5, 0.48],
+];
 
 export function ModeloGPU({ hovered }) {
-  const shroudColor = hovered ? '#00f2fe' : '#0f172a';
-  const logoColor = hovered ? '#00f2fe' : '#38bdf8';
+  const shroudColor = hovered ? '#0f766e' : '#19232d';
+  const fanFrameColor = hovered ? '#43615e' : '#34414d';
+  const logoColor = hovered ? '#5eead4' : '#14b8a6';
 
   return (
     <group rotation={[0, Math.PI / 2, 0]}>
-      {/* 1. Shroud / Carcasa Principal de la GPU */}
-      <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[2.8, 1.25, 0.45]} />
-        <meshStandardMaterial color={shroudColor} metalness={0.8} roughness={0.3} />
+      {/* Carcasa de doble ranura con bordes biselados. */}
+      <RoundedBox args={[3.4, 1.25, 0.48]} radius={0.075} smoothness={4}>
+        <meshStandardMaterial color={shroudColor} metalness={0.62} roughness={0.34} />
+      </RoundedBox>
+      <mesh position={[0, 0.61, 0.02]}>
+        <boxGeometry args={[3.15, 0.035, 0.42]} />
+        <meshStandardMaterial color="#526273" metalness={0.78} roughness={0.3} />
       </mesh>
 
-      {/* 2. Backplate Metálico Trasero */}
-      <mesh position={[0, 0, -0.24]}>
-        <boxGeometry args={[2.78, 1.22, 0.04]} />
-        <meshStandardMaterial color="#1e293b" metalness={0.9} roughness={0.25} />
-      </mesh>
-
-      {/* 3. Aletas de Disipación de Aluminio Visibles (Fin stack) */}
-      <mesh position={[0, 0, 0.05]}>
-        <boxGeometry args={[2.6, 1.1, 0.35]} />
-        <meshStandardMaterial color="#94a3b8" metalness={0.9} roughness={0.2} wireframe />
-      </mesh>
-
-      {/* 4. Dos Ventiladores Axiales Grandes */}
-      {[-0.65, 0.65].map((x, i) => (
-        <group key={i} position={[x, 0, 0.24]}>
-          {/* Aro del ventilador */}
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.5, 0.04, 16, 32]} />
-            <meshStandardMaterial color="#334155" metalness={0.8} roughness={0.3} />
-          </mesh>
-          {/* Centro / Rodamiento */}
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.18, 0.18, 0.06, 24]} />
-            <meshStandardMaterial color="#0284c7" metalness={0.9} roughness={0.2} />
-          </mesh>
-          {/* Aspas con acabado mate */}
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.46, 0.46, 0.02, 11]} />
-            <meshStandardMaterial color="#0b0f19" roughness={0.6} metalness={0.4} />
-          </mesh>
+      {/* Tres ventiladores axiales con aspas curvas, buje y tornillos. */}
+      {[-1.05, 0, 1.05].map((x) => (
+        <group key={`gpu-fan-${x}`} position={[x, 0.02, 0.27]}>
+          <ModeloVentilador
+            radio={0.34}
+            marcoColor={fanFrameColor}
+            aspaColor="#111923"
+            centroColor="#71818b"
+            acentoColor={logoColor}
+            intensidadAcento={hovered ? 0.85 : 0.18}
+            hovered={hovered}
+          />
         </group>
       ))}
 
-      {/* 5. Logo Lateral Iluminado ("GEFORCE RTX") */}
-      <group position={[0, 0.64, 0]}>
-        <mesh>
-          <boxGeometry args={[1.6, 0.1, 0.46]} />
-          <meshStandardMaterial color="#05070b" metalness={0.8} roughness={0.3} />
+      {/* Placa trasera con fijaciones y aletas expuestas del disipador. */}
+      <RoundedBox args={[3.36, 1.21, 0.045]} radius={0.05} smoothness={3} position={[0, 0, -0.265]}>
+        <meshStandardMaterial color="#334155" metalness={0.84} roughness={0.28} />
+      </RoundedBox>
+      {FINES.map((fin) => (
+        <mesh key={`gpu-fin-${fin}`} position={[-1.55 + fin * 0.147, -0.02, -0.04]}>
+          <boxGeometry args={[0.035, 0.82, 0.26]} />
+          <meshStandardMaterial color={fin % 2 ? '#64748b' : '#7c8b96'} metalness={0.86} roughness={0.3} />
         </mesh>
-        <mesh position={[0, 0.06, 0]}>
-          <planeGeometry args={[1.3, 0.06]} />
-          <meshStandardMaterial
-            color={logoColor}
-            emissive={logoColor}
-            emissiveIntensity={hovered ? 2.5 : 1.2}
-          />
+      ))}
+      {TORNILLOS.map(([x, y], index) => (
+        <mesh key={`gpu-screw-${index}`} position={[x, y, -0.294]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.035, 0.035, 0.018, 12]} />
+          <meshStandardMaterial color="#d2d9dd" metalness={0.9} roughness={0.24} />
         </mesh>
-      </group>
+      ))}
 
-      {/* 6. Conector PCIe x16 Dorado (Interfaz de conexión a placa) */}
-      <mesh position={[-0.4, -0.68, 0]}>
+      {/* Etiqueta lateral y conector de energía de 8 pines. */}
+      <RoundedBox args={[1.42, 0.14, 0.045]} radius={0.025} smoothness={2} position={[0, 0.69, 0.02]}>
+        <meshStandardMaterial color="#0b1118" metalness={0.38} roughness={0.48} />
+      </RoundedBox>
+      <mesh position={[0, 0.695, 0.047]}>
+        <planeGeometry args={[0.92, 0.035]} />
+        <meshStandardMaterial color={logoColor} emissive={logoColor} emissiveIntensity={hovered ? 0.9 : 0.35} />
+      </mesh>
+      <mesh position={[1.02, 0.55, 0.02]}>
+        <boxGeometry args={[0.28, 0.16, 0.2]} />
+        <meshStandardMaterial color="#0b1118" metalness={0.35} roughness={0.5} />
+      </mesh>
+
+      {/* Conector PCIe, bracket y salidas de vídeo. */}
+      <mesh position={[-0.4, -0.68, -0.22]}>
         <boxGeometry args={[1.5, 0.14, 0.05]} />
-        <meshStandardMaterial color="#eab308" metalness={0.95} roughness={0.15} />
+        <meshStandardMaterial color="#c69c37" metalness={0.92} roughness={0.22} />
       </mesh>
-
-      {/* 7. Placa de Puertos Traseros (Bracket I/O) */}
-      <mesh position={[-1.42, 0, 0]}>
-        <boxGeometry args={[0.06, 1.45, 0.48]} />
-        <meshStandardMaterial color="#cbd5e1" metalness={0.95} roughness={0.1} />
-      </mesh>
+      <RoundedBox args={[0.07, 1.42, 0.5]} radius={0.025} smoothness={2} position={[1.7, 0, 0]}>
+        <meshStandardMaterial color="#cbd5e1" metalness={0.9} roughness={0.24} />
+      </RoundedBox>
+      {[-0.38, 0, 0.38].map((y, index) => (
+        <mesh key={`display-port-${index}`} position={[1.745, y, 0.02]}>
+          <boxGeometry args={[0.025, 0.16, 0.22]} />
+          <meshStandardMaterial color="#0b1118" metalness={0.45} roughness={0.5} />
+        </mesh>
+      ))}
     </group>
   );
 }
-

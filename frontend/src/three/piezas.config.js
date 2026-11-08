@@ -33,7 +33,7 @@ export const PIEZAS_PC = [
     color: '#38bdf8',
     badge: 'Cerebro del Sistema',
     // Instalado en el socket LGA
-    posicionArmada: [-0.55, 0.75, -0.3],
+    posicionArmada: [-0.54, 0.75, 0.3],
     // Eyectado al frente sobre la placa
     posicionExplosionada: [0, 1.9, 2.3],
     descripcion: 'Unidad Central de Procesamiento de alta frecuencia con difusor de cobre niquelado',
@@ -44,7 +44,7 @@ export const PIEZAS_PC = [
     color: '#00f2fe',
     badge: 'Disipación Térmica',
     // Sobre el CPU y radiador arriba
-    posicionArmada: [-0.2, 0.75, 0],
+    posicionArmada: [-0.99, 0.4, 0],
     // Elevada ordenadamente en la parte superior
     posicionExplosionada: [0, 3.6, 0.8],
     descripcion: 'Sistema líquido con bloque de bomba RGB infinito y radiador dual de 240mm',
@@ -55,7 +55,7 @@ export const PIEZAS_PC = [
     color: '#a855f7',
     badge: 'Ultra Alta Velocidad',
     // En las ranuras DIMM
-    posicionArmada: [-0.55, 0.9, 0.45],
+    posicionArmada: [-0.52, 0.9, -0.65],
     // Cuadrante superior derecho
     posicionExplosionada: [3.3, 2.2, 0.8],
     descripcion: 'Kit dual channel de módulos de alto rendimiento con difusor térmico y barra RGB',
@@ -66,7 +66,7 @@ export const PIEZAS_PC = [
     color: '#00f2fe',
     badge: 'Potencia Gráfica',
     // En la ranura PCIe central
-    posicionArmada: [-0.1, -0.1, 0.1],
+    posicionArmada: [-0.26, 0.93, -0.4],
     // Frente inferior centrado
     posicionExplosionada: [0, -1.4, 2.6],
     descripcion: 'Acelerador gráfico con sistema de doble ventilador, backplate y disipador de cobre',
@@ -77,7 +77,7 @@ export const PIEZAS_PC = [
     color: '#ec4899',
     badge: 'Lectura / Escritura Rápida',
     // Debajo del socket
-    posicionArmada: [-0.55, 0.1, 0.1],
+    posicionArmada: [-0.5, 0.02, -0.1],
     // Cuadrante inferior derecho
     posicionExplosionada: [3.1, -0.8, 1.2],
     descripcion: 'Unidad de estado sólido NVMe ultrarrápida con disipador ranurado de aluminio',

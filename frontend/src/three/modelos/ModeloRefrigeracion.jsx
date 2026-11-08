@@ -1,22 +1,27 @@
 import * as THREE from 'three';
+import { RoundedBox } from '@react-three/drei';
+import { ModeloVentilador } from './ModeloVentilador';
 
 export function ModeloRefrigeracion({ hovered }) {
-  const rgbColor = hovered ? '#00f2fe' : '#38bdf8';
-  const pumpColor = hovered ? '#22d3ee' : '#0f172a';
+  const rgbColor = hovered ? '#5eead4' : '#14b8a6';
+  const pumpColor = hovered ? '#263b3a' : '#0f172a';
 
   return (
     <group rotation={[0, Math.PI / 2, 0]}>
       {/* 1. Bloque de Bomba (CPU Waterblock) */}
       <group position={[-0.3, 0.35, 0.45]}>
         {/* Cuerpo cilíndrico de la bomba */}
+        <RoundedBox args={[0.88, 0.82, 0.22]} radius={0.14} smoothness={5} position={[0, 0, 0.05]}>
+          <meshStandardMaterial color={pumpColor} metalness={0.68} roughness={0.28} />
+        </RoundedBox>
         <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.42, 0.44, 0.35, 32]} />
+          <cylinderGeometry args={[0.34, 0.38, 0.28, 40]} />
           <meshStandardMaterial color={pumpColor} metalness={0.8} roughness={0.25} />
         </mesh>
 
         {/* Anillo de Espejo Infinito RGB */}
-        <mesh position={[0, 0, 0.18]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.3, 0.04, 16, 32]} />
+        <mesh position={[0, 0, 0.16]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.27, 0.035, 12, 36]} />
           <meshStandardMaterial
             color={rgbColor}
             emissive={rgbColor}
@@ -25,10 +30,16 @@ export function ModeloRefrigeracion({ hovered }) {
         </mesh>
 
         {/* Logo / Centro de la bomba */}
-        <mesh position={[0, 0, 0.185]}>
-          <circleGeometry args={[0.22, 32]} />
-          <meshStandardMaterial color="#05070b" roughness={0.1} metalness={0.9} />
+        <mesh position={[0, 0, 0.18]}>
+          <circleGeometry args={[0.19, 32]} />
+          <meshStandardMaterial color="#cbd5e1" roughness={0.3} metalness={0.6} />
         </mesh>
+        {[-1, 1].map((side) => (
+          <mesh key={`pump-fitting-${side}`} position={[side * 0.36, -0.22, 0.02]} rotation={[0, 0, Math.PI / 2]}>
+            <cylinderGeometry args={[0.075, 0.075, 0.13, 20]} />
+            <meshStandardMaterial color="#94a3b8" metalness={0.84} roughness={0.28} />
+          </mesh>
+        ))}
       </group>
 
       {/* 2. Mangueras Malladas Reforzadas (Curvadas hacia el radiador) */}
@@ -69,30 +80,28 @@ export function ModeloRefrigeracion({ hovered }) {
 
       {/* 3. Radiador Superior de Aluminio de 240mm */}
       <group position={[0.2, 1.6, 0.2]}>
-        <mesh>
-          <boxGeometry args={[2.5, 0.35, 0.7]} />
-          <meshStandardMaterial color="#0b0f19" metalness={0.85} roughness={0.3} />
-        </mesh>
+        <RoundedBox args={[2.5, 0.35, 0.7]} radius={0.055} smoothness={3}>
+          <meshStandardMaterial color="#1c2732" metalness={0.75} roughness={0.36} />
+        </RoundedBox>
+        {Array.from({ length: 15 }, (_, indice) => (
+          <mesh key={`radiator-fin-${indice}`} position={[-1.12 + indice * 0.16, 0, 0.19]}>
+            <boxGeometry args={[0.025, 0.25, 0.26]} />
+            <meshStandardMaterial color="#64748b" metalness={0.82} roughness={0.34} />
+          </mesh>
+        ))}
 
-        {/* Dos Ventiladores de 120mm con Aspas RGB */}
+        {/* Ventiladores superiores de 120mm */}
         {[-0.6, 0.6].map((x, i) => (
-          <group key={i} position={[x, -0.25, 0]}>
-            {/* Marco del ventilador */}
-            <mesh>
-              <boxGeometry args={[1.1, 0.2, 0.65]} />
-              <meshStandardMaterial color="#1e293b" metalness={0.5} roughness={0.6} />
-            </mesh>
-            {/* Aspas translúcidas con iluminación */}
-            <mesh rotation={[Math.PI / 2, 0, 0]}>
-              <cylinderGeometry args={[0.48, 0.48, 0.1, 24]} />
-              <meshStandardMaterial
-                color={rgbColor}
-                emissive={rgbColor}
-                emissiveIntensity={hovered ? 1.8 : 0.8}
-                transparent
-                opacity={0.7}
-              />
-            </mesh>
+          <group key={i} position={[x, 0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <ModeloVentilador
+              radio={0.36}
+              marcoColor="#334155"
+              aspaColor="#0b1118"
+              centroColor="#64748b"
+              acentoColor={rgbColor}
+              intensidadAcento={hovered ? 0.75 : 0.22}
+              hovered={hovered}
+            />
           </group>
         ))}
       </group>

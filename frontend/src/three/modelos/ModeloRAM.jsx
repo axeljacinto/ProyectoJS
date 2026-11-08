@@ -1,24 +1,28 @@
-import * as THREE from 'three';
+import { RoundedBox } from '@react-three/drei';
 
 export function ModeloRAM({ hovered }) {
-  const ramRgb = hovered ? '#00f2fe' : '#a855f7';
+  const ramRgb = hovered ? '#5eead4' : '#14b8a6';
 
   return (
     <group rotation={[0, Math.PI / 2, 0]}>
       {/* Par de Módulos RAM en Ranuras 2 y 4 (Dual Channel) */}
-      {[-0.15, 0.15].map((offsetZ, idx) => (
-        <group key={idx} position={[0, 0, offsetZ]}>
-          {/* PCB y Disipador de Aluminio Anodizado Negro */}
+      {[-0.13, 0.13].map((offsetX, idx) => (
+        <group key={idx} position={[offsetX, 0, 0]}>
+          {/* PCB y disipador de aluminio con perfil biselado. */}
           <mesh position={[0, 0, 0]}>
-            <boxGeometry args={[0.07, 1.35, 0.22]} />
-            <meshStandardMaterial color="#0f172a" metalness={0.8} roughness={0.3} />
+            <boxGeometry args={[0.08, 1.34, 0.19]} />
+            <meshStandardMaterial color="#0b1118" metalness={0.55} roughness={0.45} />
           </mesh>
 
-          {/* Cortes angulares y detalles geométricos en el disipador */}
-          <mesh position={[0.04, 0.1, 0]}>
-            <boxGeometry args={[0.02, 0.9, 0.18]} />
-            <meshStandardMaterial color="#334155" metalness={0.9} roughness={0.2} />
-          </mesh>
+          <RoundedBox args={[0.15, 1.18, 0.26]} radius={0.035} smoothness={3} position={[0.045, 0.04, 0]}>
+            <meshStandardMaterial color="#263544" metalness={0.76} roughness={0.32} />
+          </RoundedBox>
+          {[-0.065, -0.02, 0.025, 0.07].map((offset) => (
+            <mesh key={`ram-ridge-${offset}`} position={[0.125, offset, 0]}>
+              <boxGeometry args={[0.018, 0.025, 0.19]} />
+              <meshStandardMaterial color="#526273" metalness={0.72} roughness={0.34} />
+            </mesh>
+          ))}
 
           {/* Barra de Luz Superior RGB Difusa */}
           <mesh position={[0, 0.7, 0]}>
@@ -26,17 +30,19 @@ export function ModeloRAM({ hovered }) {
             <meshStandardMaterial
               color={ramRgb}
               emissive={ramRgb}
-              emissiveIntensity={hovered ? 2.5 : 1.3}
-              transparent
-              opacity={0.9}
+              emissiveIntensity={hovered ? 1.2 : 0.45}
+              metalness={0.22}
+              roughness={0.3}
             />
           </mesh>
 
           {/* Contactos dorados inferiores */}
-          <mesh position={[0, -0.68, 0]}>
-            <boxGeometry args={[0.04, 0.08, 0.2]} />
-            <meshStandardMaterial color="#eab308" metalness={0.95} roughness={0.1} />
-          </mesh>
+          {Array.from({ length: 8 }, (_, contacto) => (
+            <mesh key={`ram-contact-${contacto}`} position={[0.052, -0.64, -0.09 + contacto * 0.025]}>
+              <boxGeometry args={[0.035, 0.075, 0.014]} />
+              <meshStandardMaterial color="#c69c37" metalness={0.93} roughness={0.24} />
+            </mesh>
+          ))}
         </group>
       ))}
     </group>
